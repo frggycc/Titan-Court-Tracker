@@ -59,9 +59,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON UserLogin TO 'Executive Manager'@'localh
 
 INSERT INTO UserLogin 
 (name_first, name_last, email, username, password, role) VALUES
-('Alice', 'Observer', 'alice@test.com', 'alice', '!alice_123', 1),
-('Bob',   'Users',    'bob@test.com',   'bob',   '!bob_123',   2),
-('Carol', 'Manager',  'carol@test.com', 'carol', '!carol_123', 3);
+('Alice', 'Observer', 'alice@test.com', 'alice', '$2y$10$ZZB5.B0QTBRp9vvOMDG32OQET5sAC8bXwDVMOp8Ov0MW9oTSiRzYO', 1),
+('Bob',   'Users',    'bob@test.com',   'bob',   '$2y$10$mNgH8HugHuqDKPbWrAq1Net4xohT2BKZ3UxkPn8rZDQH9lqkxj9X6',   2),
+('Carol', 'Manager',  'carol@test.com', 'carol', '$2y$10$1bBdN3wIGVfX8hSpujdIAuGjsfhjedcmkLDuJMT4VKYqQ7lf.az82', 3);
 
 --===================
 --LoginHistory Table
