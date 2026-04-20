@@ -1,7 +1,11 @@
 body{
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
   background-color: black;
-  color:white;
+  color: #EBFBFF;
+}
+a{
+  color: #FF7900;
+  text-decoration: none;
 }
 
 /* LOGIN AND REGISTER BOXES */
@@ -9,14 +13,50 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
-.auth-box {
+.auth-box{
   background-color: #00244E;
   padding: 40px;
   border-radius: 8px;
+  width: 400px;
 }
 
 .message{
   padding: 10px;
+  text-align: center;
+}
+
+/* FORMS/AUTH */
+label {
+  display: black;
+  color: #EBFBFF;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"]
+{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #0F3F8C;
+  color: #EBFBFF;
+  font-size: 14px;
+}
+
+input[type="submit"]{
+  width: 100%;
+  padding: 10px;
+  background-color: #FF7900;
+  color: #00244E;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.redirect-link{
+  margin-top: 15px;
   text-align: center;
 }
