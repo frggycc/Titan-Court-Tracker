@@ -61,7 +61,7 @@
                 }
                 // Registration worked; redirect to login
                 else if( $stmt->execute() && $stmt->affected_rows === 1 ){    
-                    header('Location: index.php?registered=1');
+                    header('Location: login.php?registered=1');
                     exit;
                 }
                 else{
