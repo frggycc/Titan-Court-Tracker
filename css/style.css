@@ -3,13 +3,20 @@ body{
   background-color: black;
   color:white;
 }
+
+/* LOGIN AND REGISTER BOXES */
 .auth-container{
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .auth-box {
   background-color: #00244E;
   padding: 40px;
+  border-radius: 8px;
+}
+
+.message{
+  padding: 10px;
+  text-align: center;
 }
