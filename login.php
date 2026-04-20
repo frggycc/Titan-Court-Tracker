@@ -1,73 +1,96 @@
 <?php
     require_once('StartSession.php');
 
-    // Go to dashboard if already session
-    if (authenticatdUser()){
-        header('Location: Dashboard.php');
+    // Go to dashboard if already logged in
+    if( authenticatedUser() ){
+        header('Location: dashboard.php');
         exit;
     }
-    
-    // For frontend and testing
-    $loginError = '';
-    $registerSuccess = '';
 
-    if(isset($_POST['action']) && $_POST['action'] === 'login'){
-        // Sanitize; all lower and no trailing spaces
-        $userName = strtolower( trim( preg_replace("/\t|\R/", ' ', $_POST['username'])));
-        $password = trim( $_POST['password']);
+    $loginError      = '';
+    $registerSuccess = isset($_GET['registered']) ? 'Account created successfully. You can now log in.' : '';
 
-        // If if one field not filled
-        if( empty($userName) || empty($password)){
-            $loginError = "Login attempt failed.";
-        }
+    if( isset($_POST['action']) && $_POST['action'] === 'login' ){
 
-        // Go through various error checks; Eventually change all $loginError to 'Login attempt failed."
-        $query = "SELECT Roles.role_name, UserLogin.password 
-                FROM UserLogin, Roles 
-                WHERE UserLogin.username = ? AND UserLogin.role = Roles.ID";
-        
-        if(($stmt = $db->prepare($query)) === FALSE){
-            $loginError = "Error: failed to prepare query: ". $db->error . "<br/>";
-        }
-        if(($stmt->bind_param('s', $userName)) === FALSE){
-            $loginError = "Error: failed to bind query parameters to query: ". $db->error . "<br/>";
-        }
-        // Execute stored correctly but no instance found of username
-        if(!($stmt->execute() && $stmt->store_result() && $stmt->num_rows === 1)){
-            $loginError = "Failure: existing user '$userName' not found<br/>";
-        }
-        // See if can bind results to local variables
-        if(($stmt->bind_result($roleName, $PWHash)) === FALSE){
-            $loginError = "Error: failed to bind query results to local variables: ". $db->error . "<br/>";
-        }
-        if(($stmt->fetch()) === FALSE){
-            $loginError = "Error: failed to fetch query results: ". $db->error . "<br/>";
-        }
+        // Sanitize user input
+        $userName = strtolower( trim( preg_replace("/\t|\R/", ' ', $_POST['username']) ) );
+        $password = trim( $_POST['password'] );
 
-        // Now validating password/usernames
-        $stmt->fetch();
-        if(!password_verify($password, $PWHash)){
-            $loginError = "Incorrect credentials.";
+        if( empty($userName) || empty($password) ){
+            $loginError = 'Login attempt failed.';
         }
         else{
-            // Session assignments
-            $_SESSION['UserName'] = $userName;
-            $_SESSION['UserRole'] = $roleName;
+            $query = "SELECT Roles.role_name, UserLogin.password
+                      FROM UserLogin, Roles
+                      WHERE UserLogin.username = ?  AND
+                            UserLogin.role     = Roles.ID";
 
-            $stmt->close();
+            if( ($stmt = $db->prepare($query)) === FALSE ){
+                $loginError = 'Login attempt failed.';
+            }
+            else if( ($stmt->bind_param('s', $userName)) === FALSE ){
+                $loginError = 'Login attempt failed.';
+            }
+            else if( !($stmt->execute() && $stmt->store_result() && $stmt->num_rows === 1) ){
+                $loginError = 'Login attempt failed.';
+            }
+            else if( ($stmt->bind_result($roleName, $PWHash)) === FALSE ){
+                $loginError = 'Login attempt failed.';
+            }
+            else if( ($stmt->fetch()) === FALSE ){
+                $loginError = 'Login attempt failed.';
+            }
+            else if( !password_verify($password, $PWHash) ){
+                $loginError = 'Login attempt failed.';
+            }
+            else{
+                // Login successful; Set session variables
+                $_SESSION['UserName'] = $userName;
+                $_SESSION['UserRole'] = $roleName;
 
-            /*******************************
-             * TODO: Update UserLogin table
-             * ****************************/
+                $stmt->close();
 
-            header('Location: dashboard.php');
-            exit;
+                // Update last_login 
+                $updateQuery = "UPDATE UserLogin
+                                SET    last_login = NOW()
+                                WHERE  username   = ?";
+
+                if( ($updateStmt = $db->prepare($updateQuery)) !== FALSE ){
+                    $updateStmt->bind_param('s', $userName);
+                    $updateStmt->execute();
+                    $updateStmt->close();
+                }
+
+                // Insert login into LoginHistory table
+                $idQuery = "SELECT ID 
+                            FROM UserLogin 
+                            WHERE username = ?";
+
+                if( ($idStmt = $db->prepare($idQuery)) !== FALSE ){
+                    $idStmt->bind_param('s', $userName);
+                    $idStmt->execute();
+                    $idStmt->store_result();
+                    $idStmt->bind_result($userID);
+                    $idStmt->fetch();
+                    $idStmt->close();
+
+                    $histQuery = "INSERT INTO LoginHistory (user_id, login_time) 
+                                  VALUES (?, NOW())";
+
+                    if( ($histStmt = $db->prepare($histQuery)) !== FALSE ){
+                        $histStmt->bind_param('i', $userID);
+                        $histStmt->execute();
+                        $histStmt->close();
+                    }
+                }
+
+                header('Location: dashboard.php');
+                exit;
+            }
+
+            if( isset($stmt) ) $stmt->close();
         }
     }
 
-    
-    /**************************************
-     * TODO: Complete simple frontend page
-     *************************************/
     require_once('login_view.php');
 ?>
