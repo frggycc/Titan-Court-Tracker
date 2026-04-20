@@ -3,7 +3,7 @@
     require_once('Adaptation.php');
 
     // Return true if current session = authenticated user
-    function authenticatdUser(){
+    function authenticatedUser(){
         global $DBPasswords;
         return isset($_SESSION['UserName']) && !empty($_SESSION['UserName']) &&
                isset($_SESSION['UserRole']) && !empty($_SESSION['UserRole']) &&
@@ -11,7 +11,7 @@
     }
 
     // Connect as authenticated user's DB role or the deafult "NO_ROLE"
-    if (authenticatdUser()){
+    if (authenticatedUser()){
         $DBName = $_SESSION['UserRole'];
     }
     else{
