@@ -1,0 +1,15 @@
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+  color:white;
+}
+.auth-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-box {
+  background-color: #00244E;
+  padding: 40px;
+}
