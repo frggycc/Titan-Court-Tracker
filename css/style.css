@@ -1,6 +1,6 @@
 body{
   font-family: Arial, sans-serif;
-  background-color: black;
+  background-color: #222222;
   color: #EBFBFF;
 }
 a{
@@ -18,7 +18,7 @@ a{
 .auth-box{
   background-color: #00244E;
   padding: 40px;
-  border-radius: 8px;
+  border-radius: 15px;
   width: 400px;
 }
 
@@ -29,7 +29,7 @@ a{
 
 /* FORMS/AUTH */
 label {
-  display: black;
+  display: 222222;
   color: #EBFBFF;
 }
 
@@ -38,12 +38,12 @@ input[type="password"],
 input[type="email"],
 input[type="number"]
 {
-  width: 100%;
+  width: 94%;
   padding: 10px;
   margin-bottom: 15px;
   background-color: #0F3F8C;
   color: #EBFBFF;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 input[type="submit"]{
@@ -58,5 +58,5 @@ input[type="submit"]{
 
 .redirect-link{
   margin-top: 15px;
-  text-align: center;
+  text-align: left;
 }
