@@ -26,22 +26,22 @@
                             UserLogin.role     = Roles.ID";
 
             if( ($stmt = $db->prepare($query)) === FALSE ){
-                $loginError = 'Login attempt failed.';
+                $loginError = "Login attempt failed.";
             }
             else if( ($stmt->bind_param('s', $userName)) === FALSE ){
-                $loginError = 'Login attempt failed.';
+                $loginError = "Login attempt failed.";
             }
             else if( !($stmt->execute() && $stmt->store_result() && $stmt->num_rows === 1) ){
-                $loginError = 'Login attempt failed.';
+                $loginError = "Login attempt failed.";
             }
             else if( ($stmt->bind_result($roleName, $PWHash)) === FALSE ){
-                $loginError = 'Login attempt failed.';
+                $loginError = "Login attempt failed.";
             }
             else if( ($stmt->fetch()) === FALSE ){
-                $loginError = 'Login attempt failed.';
+                $loginError = "Login attempt failed.";
             }
             else if( !password_verify($password, $PWHash) ){
-                $loginError = 'Login attempt failed.';
+                $loginError = "Login attempt failed.";
             }
             else{
                 // Login successful; Set session variables
@@ -84,7 +84,7 @@
                     }
                 }
 
-                header('Location: dashboard.php');
+                header('Location: landing.php');
                 exit;
             }
 
