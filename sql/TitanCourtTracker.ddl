@@ -237,6 +237,8 @@ CREATE TABLE Staff(
 );
 
 GRANT INSERT, SELECT, UPDATE, DELETE ON Staff TO 'Executive Manager'@'localhost';
+GRANT SELECT ON Staff TO 'Observer'@'localhost';
+GRANT SELECT ON Staff TO 'Users'@'localhost';
 
 INSERT INTO Staff
 (ID, name_first, name_last, title, email, phone, salary) VALUES
