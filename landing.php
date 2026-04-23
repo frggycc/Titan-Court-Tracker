@@ -11,7 +11,7 @@
 
     $role     = $_SESSION['UserRole'];
     $userName = $_SESSION['UserName'];
-    
+
     $seasons = [
         '2025-2026', 
         '2024-2025', '2023-2024', '2022-2023', '2021-2022', '2020-2021', 
@@ -48,7 +48,7 @@
 
 
     if( ($stmt = $db->prepare($scheduleQuery)) === FALSE ){
-        $scheduleError = 'Schedule query failed: ' . $db->error;
+        $scheduleError = "Schedule query failed: " . $db->error;
     }
     else{
         $stmt->bind_param('s', $selectedSeason);
