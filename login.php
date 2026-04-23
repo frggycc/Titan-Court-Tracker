@@ -17,14 +17,19 @@
         $password = trim( $_POST['password'] );
 
         if( empty($userName) || empty($password) ){
-            $loginError = 'Login attempt failed.';
+            $loginError = "Login attempt failed.";
         }
         else{
-            $query = "SELECT Roles.role_name, UserLogin.password
-                      FROM UserLogin, Roles
-                      WHERE UserLogin.username = ?  AND
-                            UserLogin.role     = Roles.ID";
-
+            $query = "SELECT
+                        Roles.role_name,
+                        UserLogin.password
+                        FROM
+                        UserLogin, Roles
+                        WHERE
+                        UserLogin.username = ?  AND
+                        UserLogin.role     = Roles.ID";
+    
+            // Each block only runs if all previous blocks succeeded
             if( ($stmt = $db->prepare($query)) === FALSE ){
                 $loginError = "Login attempt failed.";
             }
@@ -43,46 +48,43 @@
             else if( !password_verify($password, $PWHash) ){
                 $loginError = "Login attempt failed.";
             }
-            else{
-                // Login successful; Set session variables
+            else
+            {
+                // Login successful and set roles
                 $_SESSION['UserName'] = $userName;
                 $_SESSION['UserRole'] = $roleName;
-
+        
                 $stmt->close();
-
-                // Update last_login 
-                $updateQuery = "UPDATE UserLogin
-                                SET    last_login = NOW()
-                                WHERE  username   = ?";
-
-                if( ($updateStmt = $db->prepare($updateQuery)) !== FALSE ){
+        
+                // Update last_login timestamp for this user
+                if( ($updateStmt = $db->prepare(
+                "UPDATE UserLogin SET last_login = NOW() WHERE username = ?"
+                )) !== FALSE ){
                     $updateStmt->bind_param('s', $userName);
                     $updateStmt->execute();
                     $updateStmt->close();
                 }
-
-                // Insert login into LoginHistory table
-                $idQuery = "SELECT ID 
-                            FROM UserLogin 
-                            WHERE username = ?";
-
-                if( ($idStmt = $db->prepare($idQuery)) !== FALSE ){
+        
+                // Insert login event into LoginHistory
+                if( ($idStmt = $db->prepare(
+                "SELECT ID FROM UserLogin WHERE username = ?"
+                )) !== FALSE ){
                     $idStmt->bind_param('s', $userName);
                     $idStmt->execute();
                     $idStmt->store_result();
                     $idStmt->bind_result($userID);
                     $idStmt->fetch();
                     $idStmt->close();
-
-                    $histQuery = "INSERT INTO LoginHistory (user_id, login_time) 
-                                  VALUES (?, NOW())";
-
-                    if( ($histStmt = $db->prepare($histQuery)) !== FALSE ){
+        
+                    if( ($histStmt = $db->prepare(
+                        "INSERT INTO LoginHistory (user_id, login_time) VALUES (?, NOW())"
+                    )) !== FALSE ){
                         $histStmt->bind_param('i', $userID);
                         $histStmt->execute();
                         $histStmt->close();
                     }
                 }
+
 
                 header('Location: landing.php');
                 exit;
