@@ -19,9 +19,8 @@
         '2019-2020', '2018-2019', '2017-2018', '2016-2017', '2015-2016'
     ];
 
-    $selectedSeason = isset($_GET['season']) && in_array($_GET['season'], $seasons)
-                      ? $_GET['season']
-                      : $seasons[0];
+   $selectedSeason   = isset($_GET['season'])    && in_array($_GET['season'], $seasons)
+                      ? $_GET['season'] : $seasons[0];
     $selectedGameID   = isset($_GET['game_id'])   ? (int)$_GET['game_id']   : 0;
     $selectedPlayerID = isset($_GET['player_id']) ? (int)$_GET['player_id'] : 0;
 
@@ -105,6 +104,139 @@
         }
         
         $stmt->close();
+    }
+
+    // Getting list of all games for a specific year
+    $gameListRows  = [];
+    $gameListError = '';
+    
+    $gameListQuery = "SELECT 
+                        g.ID, 
+                        g.game_date, 
+                        lt.team_name AS opponent, 
+                        g.outcome
+                      FROM  Game g
+                      JOIN  LeagueTeam lt ON g.opponent_id = lt.ID
+                      WHERE g.season_year = ?
+                      ORDER BY g.game_date ASC";
+    $stmt = $db->prepare($gameListQuery);
+    if( $stmt === FALSE ){
+        $gameListError = 'Game list query failed: ' . $db->error;
+    }
+    else{
+        $stmt->bind_param('s', $selectedSeason);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($glID, $glDate, $glOpponent, $glOutcome);
+        while( $stmt->fetch() ){
+            $gameListRows[] = ['ID'=>$glID, 'game_date'=>$glDate, 'opponent'=>$glOpponent, 'outcome'=>$glOutcome];
+        }
+        $stmt->close();
+    
+        if( $selectedGameID === 0 && !empty($gameListRows) ){
+            $selectedGameID = $gameListRows[0]['ID'];
+        }   
+    }
+    
+    
+    // Box scores for Game_ID chosen via dropdown
+    $gameInfo       = [];
+    $gameStatsRows  = [];
+    $gameStatsError = '';
+    
+    if( $selectedGameID > 0 )
+    {
+        $gameBoxQuery = "SELECT 
+                            g.game_date, 
+                            g.game_time, 
+                            g.location, 
+                            g.home_or_away,
+                            g.outcome, 
+                            g.csuf_score, 
+                            g.opp_score,
+                            lt.team_name AS opponent
+                         FROM  Game g
+                         JOIN  LeagueTeam lt ON g.opponent_id = lt.ID
+                         WHERE g.ID = ?
+                         LIMIT 1";
+        $stmt = $db->prepare($gameBoxQuery);
+        if( $stmt === FALSE ){
+            $gameStatsError = 'Game info query failed: ' . $db->error;
+        }
+
+        else{
+            $stmt->bind_param('i', $selectedGameID);
+            $stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($giDate, $giTime, $giLoc, $giHA, $giOutcome, $giCsuf, $giOpp, $giOpponent);
+            if( $stmt->fetch() )
+                $gameInfo = [
+                    'game_date'    => $giDate,    
+                    'game_time'    => $giTime,
+                    'location'     => $giLoc,     
+                    'home_or_away' => $giHA,
+                    'outcome'      => $giOutcome, '
+                    csuf_score'    => $giCsuf,
+                    'opp_score'    => $giOpp,     
+                    'opponent'     => $giOpponent,
+                ];
+            $stmt->close();
+        }
+    
+        $stmt = $db->prepare("SELECT p.name_first, p.name_last, p.jersey_number, p.position,
+                                    gs.playing_time_min, gs.playing_time_sec,
+                                    gs.points, gs.assists, gs.rebounds,
+                                    gs.steals, gs.blocks, gs.turnovers,
+                                    gs.fouls, gs.free_throw, gs.free_throw_attempts
+                            FROM  GameStatistics gs
+                            JOIN  Player p ON gs.player_id = p.ID
+                            WHERE gs.game_id = ?
+                            ORDER BY gs.points DESC");
+        if( $stmt === FALSE ){
+            $gameStatsError = 'Box score query failed: ' . $db->error;
+        }
+        
+        else{
+            $stmt->bind_param('i', $selectedGameID);
+            $stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result(
+                    $gsFirst, 
+                    $gsLast, 
+                    $gsJersey, 
+                    $gsPos,
+                    $gsMin, 
+                    $gsSec, 
+                    $gsPts, 
+                    $gsAst, 
+                    $gsReb,
+                    $gsStl, 
+                    $gsBlk, 
+                    $gsTo, 
+                    $gsFouls, 
+                    $gsFT, 
+                    $gsFTA
+            );
+            while( $stmt->fetch() )
+                $gameStatsRows[] = [
+                    'name_first'          => $gsFirst,  
+                    'name_last'           => $gsLast,
+                    'jersey_number'       => $gsJersey, 
+                    'position'            => $gsPos,
+                    'playing_time_min'    => $gsMin,    
+                    'playing_time_sec'    => $gsSec,
+                    'points'              => $gsPts,    
+                    'assists'             => $gsAst,
+                    'rebounds'            => $gsReb,    
+                    'steals'              => $gsStl,
+                    'blocks'              => $gsBlk,    
+                    'turnovers'           => $gsTo,
+                    'fouls'               => $gsFouls,  
+                    'free_throw'          => $gsFT,
+                    'free_throw_attempts' => $gsFTA,
+                ];
+            $stmt->close();
+        }
     }
 
     require_once('statistics_view.php');
