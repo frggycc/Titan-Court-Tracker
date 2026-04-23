@@ -1,9 +1,9 @@
 <?php
     require_once('StartSession.php');
 
-    // Go to dashboard if already logged in
+    // Go to landing page if already logged in
     if( authenticatedUser() ){
-        header('Location: dashboard.php');
+        header('Location: landing.php');
         exit;
     }
 
