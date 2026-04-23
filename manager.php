@@ -13,7 +13,7 @@
     $role     = $_SESSION['UserRole'];
     $userName = $_SESSION['UserName'];
 
-    require_once('account_view.php');
+    require_once('manager_view.php');
  
 ?>
  
