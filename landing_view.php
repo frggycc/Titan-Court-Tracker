@@ -78,7 +78,7 @@
     <!-- LEAGUE TEAMS -->
     <div class="card">
         <div class="card-header">
-            <h2>Big West Conference Teams</h2>
+            <h2>League Teams</h2>
         </div>
         <table>
             <tr>
