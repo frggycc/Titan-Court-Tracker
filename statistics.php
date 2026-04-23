@@ -34,15 +34,26 @@
                             p.ID,
                             p.name_first,
                             p.name_last,
-                            COUNT(gs.ID)     AS games_played,
-                            AVG(gs.points)   AS avg_points,
-                            AVG(gs.assists)  AS avg_assists,
-                            AVG(gs.rebounds) AS avg_rebounds
-                         FROM Player p
-                         LEFT JOIN GameStatistics gs ON p.ID = gs.player_id
-                         LEFT JOIN Game g            ON gs.game_id = g.ID AND g.season_year = ?
-                         GROUP BY p.ID
-                         ORDER BY p.name_last, p.name_first";
+                            p.jersey_number,
+                            p.position,
+                            p.class,
+                            COUNT(gs.ID)                AS games_played,
+                            AVG(gs.playing_time_min)    AS avg_min,
+                            AVG(gs.playing_time_sec)    AS avg_sec,
+                            AVG(gs.points)              AS avg_points,
+                            AVG(gs.assists)             AS avg_assists,
+                            AVG(gs.rebounds)            AS avg_rebounds,
+                            AVG(gs.steals)              AS avg_steals,
+                            AVG(gs.blocks)              AS avg_blocks,
+                            AVG(gs.turnovers)           AS avg_turnovers,
+                            AVG(gs.free_throw)          AS avg_ft,
+                            AVG(gs.free_throw_attempts) AS avg_fta
+                            FROM  Player p
+                            LEFT JOIN GameStatistics gs ON p.ID       = gs.player_id
+                            LEFT JOIN Game           g  ON gs.game_id = g.ID
+                                                        AND g.season_year = ?
+                            GROUP BY p.ID
+                            ORDER BY p.name_last, p.name_first";
 
     if(($stmt = $db->prepare($playerStatsQuery)) === FALSE){
         $playerStatsError = "Player statistics query failed: " . $db->error;
@@ -55,20 +66,41 @@
             $psID, 
             $psFirst, 
             $psLast, 
+            $psJersey, 
+            $psPos, 
+            $psClass,
             $psGames, 
+            $psAvgMin, 
+            $psAvgSec,
             $psAvgPts, 
             $psAvgAst, 
             $psAvgReb,
+            $psAvgStl, 
+            $psAvgBlk, 
+            $psAvgTo,
+            $psAvgFT, 
+            $psAvgFTA
         );
+
         while( $stmt->fetch() ){
             $playerRows[] = [
                 'ID'            => $psID,
                 'name_first'    => $psFirst,
                 'name_last'     => $psLast,
+                'jersey_number' => $psJersey,
+                'position'      => $psPos,
+                'class'         => $psClass,
                 'games_played'  => $psGames,
+                'avg_min'       => round($psAvgMin),
+                'avg_sec'       => round($psAvgSec),
                 'avg_points'    => round($psAvgPts, 1),
                 'avg_assists'   => round($psAvgAst, 1),
                 'avg_rebounds'  => round($psAvgReb, 1),
+                'avg_steals'    => round($psAvgStl, 1),
+                'avg_blocks'    => round($psAvgBlk, 1),
+                'avg_turnovers' => round($psAvgTo,  1),
+                'avg_ft'        => round($psAvgFT,  1),
+                'avg_fta'       => round($psAvgFTA, 1),
             ];
         }
         
@@ -76,6 +108,5 @@
     }
 
     require_once('statistics_view.php');
- 
 ?>
  
