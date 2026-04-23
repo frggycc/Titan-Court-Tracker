@@ -13,7 +13,9 @@
   
     <!-- DISPLAY GAME SCHEDULE -->
     <div class="card">
-        <h2>Game Schedule</h2>
+        <div class="card-header">
+            <h2>Game Schedule</h2>
+        </div>
         <table>
             <tr>
                 <th>Date</th>
@@ -51,6 +53,49 @@
     </div>
 
     <!-- DISPLAY CSUF ROSTER -->
+    <div class="card">
+        <div class="card-header">
+            <h2>CSUF Roster</h2>
+        </div>
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Class</th>
+            </tr>
+            <?php foreach( $rosterRows as $row ): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['jersey_number']);                       ?></td>
+                <td><?php echo htmlspecialchars($row['name_first'] . ' ' . $row['name_last']);?></td>
+                <td><?php echo htmlspecialchars($row['position']);                            ?></td>
+                <td><?php echo htmlspecialchars($row['class']);                               ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+
     <!-- LEAGUE TEAMS -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Big West Conference Teams</h2>
+        </div>
+        <table>
+            <tr>
+                <th>Team Name</th>
+                <th>Head Coach</th>
+                <th>Conference</th>
+                <th>Home</th>
+            </tr>
+            <?php foreach( $leagueRows as $row ): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['team_name']);                       ?></td>
+                <td><?php echo htmlspecialchars($row['head_coach']);?></td>
+                <td><?php echo htmlspecialchars($row['conference']);                            ?></td>
+                <td><?php echo htmlspecialchars($row['city'] . ', ' . $row['state']);  ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
 </body>
 </html>

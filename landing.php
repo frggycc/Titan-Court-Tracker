@@ -1,8 +1,8 @@
 <?php
     require_once('StartSession.php');
 
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+    // ini_set('display_errors', 1);
+    // error_reporting(E_ALL);
 
     if( !authenticatedUser() ){
         header('Location: login.php');
@@ -11,7 +11,7 @@
 
     $role     = $_SESSION['UserRole'];
     $userName = $_SESSION['UserName'];
-
+    
     $seasons = [
         '2025-2026', 
         '2024-2025', '2023-2024', '2022-2023', '2021-2022', '2020-2021', 
@@ -82,6 +82,94 @@
                 'opponent'     => $sOpponent,
                 'coach_first'  => $sCoachFirst,
                 'coach_last'   => $sCoachLast,
+            ];
+        }
+        $stmt->close();
+    }
+
+    // Get CSUF Rosters
+    $rosterRows  = [];
+    $rosterError = '';
+
+    $scheduleQuery = "SELECT DISTINCT
+                        p.ID,
+                        p.name_first,
+                        p.name_last,
+                        p.jersey_number,
+                        p.position,
+                        p.class
+                      FROM Player p
+                      JOIN GameStatistics gs ON p.ID = gs.player_id
+                      JOIN Game           g  ON gs.game_id = g.ID
+                      WHERE g.season_year = ?
+                      ORDER BY p.jersey_number ASC";
+
+
+    if( ($stmt = $db->prepare($scheduleQuery)) === FALSE ){
+        $scheduleError = 'Schedule query failed: ' . $db->error;
+    }
+    else{
+        $stmt->bind_param('s', $selectedSeason);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result(
+            $rID,
+            $rFirst,
+            $rLast,
+            $rJersey,
+            $rPosition,
+            $rClass
+        );
+        while( $stmt->fetch() ){
+            $rosterRows[] = [
+                'ID'            => $rID,
+                'name_first'    => $rFirst,
+                'name_last'     => $rLast,
+                'jersey_number' => $rJersey,
+                'position'      => $rPosition,
+                'class'         => $rClass,
+            ];
+        }
+        $stmt->close();
+    }
+
+    // Get League Teams
+    $leagueRows  = [];
+    $leagueError = '';
+
+    $scheduleQuery = "SELECT DISTINCT
+                        ID,
+                        team_name,
+                        head_coach,
+                        conference,
+                        city,
+                        state
+                      FROM LeagueTeam
+                      ORDER BY is_csuf DESC, team_name ASC";
+
+
+    if( ($stmt = $db->prepare($scheduleQuery)) === FALSE ){
+        $scheduleError = 'Schedule query failed: ' . $db->error;
+    }
+    else{
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result(
+            $lID, 
+            $lTeamName, 
+            $lHeadCoach, 
+            $lConference, 
+            $lCity, 
+            $lState
+        );
+        while( $stmt->fetch() ){
+            $leagueRows[] = [
+                'ID'         => $lID,
+                'team_name'  => $lTeamName,
+                'head_coach' => $lHeadCoach,
+                'conference' => $lConference,
+                'city'       => $lCity,
+                'state'      => $lState,
             ];
         }
         $stmt->close();
