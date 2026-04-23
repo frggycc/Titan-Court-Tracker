@@ -9,10 +9,15 @@
         header('Location: login.php');
         exit;
     }
+    if( $_SESSION['UserRole'] !== 'Executive Manager' ){
+        header('Location: landing.php');
+        exit;
+    }
 
     $role     = $_SESSION['UserRole'];
     $userName = $_SESSION['UserName'];
 
+    define('MANAGER_VIEW_LOADED', true);
     require_once('manager_view.php');
  
 ?>
