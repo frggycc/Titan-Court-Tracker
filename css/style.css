@@ -8,6 +8,34 @@ a{
   text-decoration: none;
 }
 
+/* HEADER */
+header{
+  background-color: #0F3F8C;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid #FF7900;
+}
+
+header h1{
+  color: #FF7900;
+  font-size: 25px;
+}
+
+nav{
+  color: #F5F5F5;
+  margin-left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px;
+}
+nav a{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
 /* LOGIN AND REGISTER BOXES */
 .auth-container{
   display: flex;
@@ -29,7 +57,7 @@ a{
 
 /* FORMS/AUTH */
 label {
-  display: 222222;
+  display: block;
   color: #EBFBFF;
 }
 
@@ -59,4 +87,42 @@ input[type="submit"]{
 .redirect-link{
   margin-top: 15px;
   text-align: left;
+}
+
+/* TABLES */
+table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+}
+
+th{
+  background-color: #0F3F8C;
+  color: #FF7900;
+  text-align: left;
+}
+
+td{
+  color:#F5F5F5
+}
+
+.card{
+  background-color: #00244E;
+  padding: 40px;
+  margin-bottom: 25px;
+  border-radius: 30px;
+}
+
+.card-header{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 3px solid #0F3F8C;
+  padding-bottom: 10px;
+}
+
+.card-header h2 {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
 }
