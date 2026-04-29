@@ -19,7 +19,7 @@
         '2019-2020', '2018-2019', '2017-2018', '2016-2017', '2015-2016'
     ];
 
-   $selectedSeason   = isset($_GET['season'])    && in_array($_GET['season'], $seasons)
+    $selectedSeason   = isset($_GET['season'])    && in_array($_GET['season'], $seasons)
                       ? $_GET['season'] : $seasons[0];
     $selectedGameID   = isset($_GET['game_id'])   ? (int)$_GET['game_id']   : 0;
     $selectedPlayerID = isset($_GET['player_id']) ? (int)$_GET['player_id'] : 0;
@@ -175,8 +175,8 @@
                     'game_time'    => $giTime,
                     'location'     => $giLoc,     
                     'home_or_away' => $giHA,
-                    'outcome'      => $giOutcome, '
-                    csuf_score'    => $giCsuf,
+                    'outcome'      => $giOutcome, 
+                    'csuf_score'   => $giCsuf,
                     'opp_score'    => $giOpp,     
                     'opponent'     => $giOpponent,
                 ];
@@ -195,7 +195,7 @@
         if( $stmt === FALSE ){
             $gameStatsError = 'Box score query failed: ' . $db->error;
         }
-        
+
         else{
             $stmt->bind_param('i', $selectedGameID);
             $stmt->execute();

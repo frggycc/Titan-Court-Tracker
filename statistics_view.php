@@ -53,16 +53,9 @@
             <?php foreach( $playerRows as $row ): ?>
             <tr <?php echo $row['ID'] === $selectedPlayerID ? 'class="selected-row"' : ''; ?>>
                 <td><?php echo htmlspecialchars($row['jersey_number']); ?></td>
-                <td>
-                <a href="statistics.php?season=<?php echo urlencode($selectedSeason);
-                    ?>&game_id=<?php echo $selectedGameID;
-                    ?>&player_id=<?php echo $row['ID']; ?>">
-                    <?php echo htmlspecialchars($row['name_last'] . ', ' . $row['name_first']); ?>
-                </a>
-                </td>
+                <td><?php echo htmlspecialchars($row['name_last'] . ', ' . $row['name_first']); ?></td>
                 <td><?php echo htmlspecialchars($row['position']); ?></td>
                 <td><?php echo htmlspecialchars($row['class']);    ?></td>
-
 
                 <!-- SHOW DASH FOR EMPTY STATS (= NO GAMES PLAYED) -->
                 <?php if( $row['games_played'] == 0 ): ?>
