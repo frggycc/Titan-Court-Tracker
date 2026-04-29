@@ -27,6 +27,8 @@ CREATE TABLE Roles(
     role_name VARCHAR(30) NOT NULL UNIQUE COMMENT 'Must match Database Users'
 );
 
+GRANT SELECT                         ON Roles TO 'Observer'@'localhost'; 
+GRANT SELECT                         ON Roles TO 'Users'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE ON Roles to 'Executive Manager'@'localhost';
 
 -- NOTE: These values MUST match the Database Users created above
@@ -55,6 +57,8 @@ CREATE TABLE UserLogin(
     UNIQUE INDEX idx_Username (username)
 );
 
+GRANT SELECT                         ON UserLogin TO 'Observer'@'localhost';
+GRANT SELECT                         ON UserLogin TO 'Users'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE ON UserLogin TO 'Executive Manager'@'localhost';
 
 INSERT INTO UserLogin 
@@ -115,7 +119,7 @@ GRANT INSERT, SELECT, UPDATE, DELETE ON LeagueTeam TO 'Executive Manager'@'local
 
 INSERT INTO LeagueTeam
 (ID, team_name, head_coach, conference, city, state, is_csuf) VALUES
-(1, 'CSUF Titans',      'Deadpool',   'Big West', 'Fullerton',     'CA', TRUE),
+(1, 'CSUF Titans',      'John Smith', 'Big West', 'Fullerton',     'CA', TRUE),
 (2, 'UCI Anteaters',    'Batman',     'Big West', 'Irvine',        'CA', FALSE),
 (3, 'CSULB Wildcats',   'Daredevil',  'Big West', 'Long Beach',    'CA', FALSE),
 (4, 'UCR GreenHornets', 'Hulk',       'Big West', 'Riverside',     'CA', FALSE),

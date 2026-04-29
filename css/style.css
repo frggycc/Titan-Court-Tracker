@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body{
   font-family: Arial, sans-serif;
   background-color: #222222;
@@ -64,6 +70,7 @@ nav a{
 label {
   display: block;
   color: #EBFBFF;
+  margin-bottom: 5px;
 }
 
 input[type="text"],
@@ -71,7 +78,7 @@ input[type="password"],
 input[type="email"],
 input[type="number"]
 {
-  width: 94%;
+  width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   background-color: #0F3F8C;
@@ -154,3 +161,15 @@ td{
   cursor: pointer;
 }
 
+/* ERRORS AND SUCCESS */
+.message {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+.error {background-color: #5c1a1a; color: #ff6b6b;}
+.success {background-color: #1a3a1a; color: #6bff6b;}
