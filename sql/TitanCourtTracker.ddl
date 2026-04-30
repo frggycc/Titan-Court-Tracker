@@ -161,7 +161,12 @@ INSERT INTO Player
 (106, 'Deauteronomy (Dewey)', 'Duck',   14, 'Shooting Guard', 'Junior'),
 (107, 'Louie',                'Duck',   23, 'Small Forward', 'Sophomore'),
 (108, 'Phooey',               'Duck',   42, 'Power Forward', 'Senior'),
-(109, 'Della',                'Duck',   55, 'Center', 'Junior');
+(109, 'Della',                'Duck',   55, 'Center', 'Junior'),
+
+-- PLAYERS ONLY FROM 2020-2023
+(110, 'Alfredo', 'Linguini', 33, 'Power Forward', 'Senior'),
+(111, 'Antonio', 'Madrigal', 67, 'Point Guard',   'Junior'),
+(112, 'Bing',    'Bong',     82, 'Small Forward', 'Junior');
 
 --===========================
 --PlayerPI Table (Sensitive)
@@ -338,7 +343,12 @@ INSERT INTO Game
 (19, 4, 3, '2023-2024', '2024-01-20', '19:00:00', 'Student Recreation Center, Riverside', 'Away', 'Conference', 'Loss', 72, 80),
 (20, 5, 1, '2023-2024', '2024-01-27', '19:00:00', 'Titan Gym, Fullerton CA', 'Home', 'Conference', 'Win', 89, 77),
 (21, 7, 3, '2023-2024', '2024-02-03', '19:00:00', 'Titan Gym, Fullerton CA', 'Home', 'Regular Season', 'Win', 95, 72),
-(22, 8, 2, '2023-2024', '2024-02-10', '19:00:00', 'Gold Center, Los Angeles', 'Away', 'Regular Season', 'Loss', 68, 75);
+(22, 8, 2, '2023-2024', '2024-02-10', '19:00:00', 'Gold Center, Los Angeles', 'Away', 'Regular Season', 'Loss', 68, 75),
+
+-- 2020-2021 Season
+(23, 3, 1, '2020-2021', '2021-01-23', '19:00:00', 'Titan Gym, Fullerton CA', 'Home', 'Conference', 'Win', 90, 77),
+(24, 7, 2, '2020-2021', '2021-02-07', '19:00:00', 'Titan Gym, Fullerton CA', 'Home', 'Regular Season', 'Win', 92, 72),
+(25, 6, 2, '2020-2021', '2021-02-14', '19:00:00', 'Gold Center, Los Angeles', 'Away', 'Regular Season', 'Loss', 68, 82);
 
 
 
@@ -511,7 +521,19 @@ INSERT INTO GameStatistics
 (22, 102, 28, 20, 12, 2, 3, 1, 2, 1, 0, 3, 2),
 (22, 103, 28,  0, 14, 1, 8, 2, 3, 0, 2, 2, 3),
 (22, 104, 18,  0,  6, 0, 5, 1, 2, 0, 1, 2, 2),
-(22, 108, 10,  0,  4, 0, 2, 0, 1, 0, 0, 1, 1);
+(22, 108, 10,  0,  4, 0, 2, 0, 1, 0, 0, 1, 1),
+
+(23, 110, 28,  0, 14, 1, 8, 2, 3, 0, 2, 2, 3),
+(23, 111, 18,  0,  6, 0, 5, 1, 2, 0, 1, 2, 2),
+(23, 112, 10,  0,  4, 0, 2, 0, 1, 0, 0, 1, 1),
+
+(24, 110, 32,  32, 18, 4, 3, 3, 4, 2, 0, 4, 3),
+(24, 111, 28,  56, 10, 0, 6, 1, 2, 0, 2, 2, 2),
+(24, 112, 12,  14,  8, 1, 5, 1, 2, 1, 2, 2, 3),
+
+(25, 110, 28,  42, 18, 5, 3, 4, 5, 2, 0, 1, 1),
+(25, 111, 30,  10, 16, 2, 9, 3, 4, 1, 3, 0, 1),
+(25, 112, 28,   0, 14, 1, 7, 2, 3, 0, 1, 2, 3);
 
 
 FLUSH PRIVILEGES;
