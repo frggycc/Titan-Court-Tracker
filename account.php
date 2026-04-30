@@ -119,7 +119,7 @@
                         $stmt->execute();
 
                         if( $stmt->affected_rows === 1 ){
-                            $successMsg = "Password updated successfully.";
+                            $successMessage = "Password updated successfully.";
                         }
                         else{
                             $errorMessage = "Password update failed.";
