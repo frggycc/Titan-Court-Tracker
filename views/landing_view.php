@@ -8,8 +8,6 @@
 <body>
 
     <?php require_once('components/header.php'); ?>
-
-    <!-- SEASON BAR GOES HERE -->
     
     <!-- DISPLAY GAME SCHEDULE -->
     <div class="card">

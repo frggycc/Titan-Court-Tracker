@@ -15,6 +15,32 @@ if( !defined('MANAGER_VIEW_LOADED') )
 </head>
 <body>
     <?php require_once('components/header.php'); ?>
-    <h1>HELLO MANAGER PAGE</h1>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>Users</h2>
+        </div>
+
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Current Role</th>
+                <th>Change Role</th>
+                <th>Delete</th>
+            </tr>
+            <?php foreach($userRows as $row): ?>
+                <tr <?php echo $row['username'] === $userName ? 'class="selected-row"' : ''; ?>>
+                    <td><?php echo htmlspecialchars($row['username']); ?></td>
+                    <td><?php echo htmlspecialchars(trim(($row['name_first'] ?? '') . ' ' . ($row['name_last'] ?? ''))); ?></td>
+                    <td><?php echo htmlspecialchars($row['email'] ?? '-'); ?></td>
+                    <td><?php echo htmlspecialchars($row['role_name']); ?></td>
+
+                    <!-- TODO: Change role name in table -->
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
 </body>
 </html>
