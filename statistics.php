@@ -48,9 +48,9 @@
                             AVG(gs.free_throw)          AS avg_ft,
                             AVG(gs.free_throw_attempts) AS avg_fta
                             FROM  Player p
-                            LEFT JOIN GameStatistics gs ON p.ID       = gs.player_id
-                            LEFT JOIN Game           g  ON gs.game_id = g.ID
-                                                        AND g.season_year = ?
+                            JOIN GameStatistics gs ON p.ID       = gs.player_id
+                            JOIN Game           g  ON gs.game_id = g.ID
+                            WHERE g.season_year = ?
                             GROUP BY p.ID
                             ORDER BY p.name_last, p.name_first";
 
