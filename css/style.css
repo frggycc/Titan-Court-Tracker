@@ -118,6 +118,19 @@ td{
   color:#F5F5F5
 }
 
+input.btn-inline {
+  width: auto;
+  padding: 5px;
+  background-color: #FF7900;
+  color: #222222;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: 2px;
+}
+
 .card{
   background-color: #00244E;
   padding: 40px;

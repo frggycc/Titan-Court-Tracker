@@ -21,6 +21,15 @@ if( !defined('MANAGER_VIEW_LOADED') )
             <h2>Users</h2>
         </div>
 
+        <?php if( !empty($successMessage) ): ?>
+            <div class="message success"><?php echo htmlspecialchars($successMessage); ?></div>
+        <?php endif; ?>
+ 
+        <?php if( !empty($errorMessage) ): ?>
+            <div class="message error"><?php echo htmlspecialchars($errorMessage); ?></div>
+        <?php endif; ?>
+
+
         <table>
             <tr>
                 <th>Username</th>
