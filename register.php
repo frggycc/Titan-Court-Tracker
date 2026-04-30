@@ -73,5 +73,5 @@
         }
     }
     // Load frontend
-    require_once('register_view.php');
+    require_once('views/register_view.php');
 ?>
