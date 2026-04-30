@@ -175,5 +175,5 @@
         $stmt->close();
     }
 
-    require_once('landing_view.php');
+    require_once('views/landing_view.php');
 ?>

@@ -10,7 +10,7 @@
     <?php require_once('components/header.php'); ?>
 
     <!-- SEASON BAR GOES HERE -->
-  
+    
     <!-- DISPLAY GAME SCHEDULE -->
     <div class="card">
         <div class="card-header">
@@ -89,10 +89,10 @@
             </tr>
             <?php foreach( $leagueRows as $row ): ?>
             <tr>
-                <td><?php echo htmlspecialchars($row['team_name']);                       ?></td>
-                <td><?php echo htmlspecialchars($row['head_coach']);?></td>
-                <td><?php echo htmlspecialchars($row['conference']);                            ?></td>
-                <td><?php echo htmlspecialchars($row['city'] . ', ' . $row['state']);  ?></td>
+                <td><?php echo htmlspecialchars($row['team_name']);                   ?></td>
+                <td><?php echo htmlspecialchars($row['head_coach']);                  ?></td>
+                <td><?php echo htmlspecialchars($row['conference']);                  ?></td>
+                <td><?php echo htmlspecialchars($row['city'] . ', ' . $row['state']); ?></td>
             </tr>
             <?php endforeach; ?>
         </table>

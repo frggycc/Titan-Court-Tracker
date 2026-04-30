@@ -18,7 +18,7 @@
     $userName = $_SESSION['UserName'];
 
     define('MANAGER_VIEW_LOADED', true);
-    require_once('manager_view.php');
+    require_once('views/manager_view.php');
  
 ?>
  

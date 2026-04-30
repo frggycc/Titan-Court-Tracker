@@ -239,6 +239,6 @@
         }
     }
 
-    require_once('statistics_view.php');
+    require_once('views/statistics_view.php');
 ?>
  

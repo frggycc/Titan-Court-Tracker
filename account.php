@@ -132,7 +132,7 @@
         }
     }
 
-    require_once('account_view.php');
+    require_once('views/account_view.php');
  
 ?>
  

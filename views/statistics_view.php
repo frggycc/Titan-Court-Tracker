@@ -9,8 +9,6 @@
 
     <?php require_once('components/header.php'); ?>
 
-    <!-- TEAM INFO CARD HERE -->
-    
     <!-- SEASON BAR GOES HERE -->
     <div class="drop-down-menu">
       <form method="GET" action="statistics.php">
