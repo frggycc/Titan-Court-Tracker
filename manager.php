@@ -16,6 +16,8 @@
 
     $role     = $_SESSION['UserRole'];
     $userName = $_SESSION['UserName'];
+    $errorMessage = "";
+    $successMessage = "";
 
     // Query all users and their user information
     $userRows = [];
@@ -59,6 +61,70 @@
             ];
         }
         $stmt->close();
+    }
+
+    // All roles for the dropdown menu
+    $roleRows = [];
+    $rolesError = "";
+    
+    $roleQuery = "SELECT ID, role_name
+                  FROM Roles
+                  ORDER BY ID ASC";
+    $stmt = $db->prepare($roleQuery);
+    
+    if( $stmt === FALSE ){
+        $rolesError = "Could not load roles";
+    }
+    else{
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($rID, $rName);
+
+        while( $stmt->fetch() ){
+            $roleRows[] = [
+                'ID' => $rID, 
+                'role_name' => $rName
+            ];
+        }
+        $stmt->close();
+    }
+
+
+    // Change a user's role
+    if( isset($_POST['action']) && $_POST['action'] === 'change_role'){
+        $targetUser = trim($_POST['target_username']);
+        $newRoleID = (int)$_POST['new_role_id'];
+
+        // MANAGER CANNOT CHANGE OWN ROLE
+        if($targetUser === $userName){
+            $errorMessage = "You cannot change your own role.";
+        }
+        else if(empty($targetUser) || $newRoleID <= 0){
+            $errorMessage = "Invalid user or role.";
+        }
+        else{
+            $updateQuery = "UPDATE UserLogin
+                            SET role = ?
+                            WHERE username = ?";
+
+            $stmt = $db->prepare($updateQuery);
+            if($stmt === FALSE){
+                $errorMessage = "Role update failed.";
+            }
+            else{
+                $stmt->bind_param('is', $newRoleID, $targetUser);
+                $stmt->execute();
+
+                if($stmt->affected_rows === 1){
+                    $successMessage = "Role updated successfully.";
+                }
+                else{
+                    $errorMessage = "Role update failed.";
+                }
+
+                $stmt->close();
+            }
+        }
     }
 
     define('MANAGER_VIEW_LOADED', true);
