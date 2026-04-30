@@ -57,8 +57,8 @@ CREATE TABLE UserLogin(
     UNIQUE INDEX idx_Username (username)
 );
 
-GRANT SELECT                         ON UserLogin TO 'Observer'@'localhost';
-GRANT SELECT                         ON UserLogin TO 'Users'@'localhost';
+GRANT SELECT, UPDATE                 ON UserLogin TO 'Observer'@'localhost';
+GRANT SELECT, UPDATE                 ON UserLogin TO 'Users'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE ON UserLogin TO 'Executive Manager'@'localhost';
 
 INSERT INTO UserLogin 
