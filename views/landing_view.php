@@ -8,11 +8,31 @@
 <body>
 
     <?php require_once('components/header.php'); ?>
-    
+
+    <!-- Select SEASON -->
+    <div class="season-bar">
+      <form method="GET" action="landing.php">
+        <label for="season">Season:</label>
+        <select name="season" id="season" onchange="this.form.submit()">
+          <?php foreach( $seasons as $s ): ?>
+            <option value="<?php echo $s; ?>"
+              <?php echo $s === $selectedSeason ? 'selected' : ''; ?>>
+              <?php echo htmlspecialchars($s); ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+        <noscript><input type="submit" value="Go"></noscript>
+      </form>
+    </div>
+
     <!-- DISPLAY GAME SCHEDULE -->
     <div class="card">
         <div class="card-header">
             <h2>Game Schedule</h2>
+            <!-- BUTTON FOR CRUD -->
+            <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
+                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>">+ Edit Data</a>
+            <?php endif; ?>
         </div>
         <table>
             <tr>
