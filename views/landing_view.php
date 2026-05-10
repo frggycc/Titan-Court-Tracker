@@ -74,6 +74,10 @@
     <div class="card">
         <div class="card-header">
             <h2>CSUF Roster</h2>
+            <!-- BUTTON FOR CRUD -->
+            <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
+                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>">  + Edit Data</a>
+            <?php endif; ?>
         </div>
         <table>
             <tr>
@@ -97,6 +101,10 @@
     <div class="card">
         <div class="card-header">
             <h2>League Teams</h2>
+            <!-- BUTTON FOR CRUD -->
+            <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
+                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>">  + Edit Data</a>
+            <?php endif; ?>
         </div>
         <table>
             <tr>
