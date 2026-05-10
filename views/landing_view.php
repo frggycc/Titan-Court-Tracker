@@ -10,7 +10,7 @@
     <?php require_once('components/header.php'); ?>
 
     <!-- Select SEASON -->
-    <div class="season-bar">
+    <div class="drop-down-menu">
       <form method="GET" action="landing.php">
         <label for="season">Season:</label>
         <select name="season" id="season" onchange="this.form.submit()">
@@ -31,7 +31,7 @@
             <h2>Game Schedule</h2>
             <!-- BUTTON FOR CRUD -->
             <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
-                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>">+ Edit Data</a>
+                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>">  + Edit Data</a>
             <?php endif; ?>
         </div>
         <table>
