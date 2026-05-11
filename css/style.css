@@ -121,6 +121,22 @@ td{
   padding: 6px 8px;
 }
 
+/* For the form that shows up in table */
+.inline-form-row td{
+  background-color: #000000;
+  padding: 10px;
+}
+.inline-form-grid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap:                   12px;
+  margin-bottom:         15px;
+}
+.inline-form-grid div {
+  display:        flex;
+  flex-direction: column;
+}
+
 input.btn-inline {
   width: auto;
   padding: 5px 10px;
@@ -136,8 +152,41 @@ input.btn-inline {
 }
 
 input.btn-delete, 
-btn-delete{
+.btn-delete{
   width: auto;
+  padding: 5px 10px;
+  background-color: red;
+  color:#F5F5F5;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: 2px;
+}
+
+.manage-btn {
+  display:          inline-block;
+  margin-left:      auto;
+  padding:          6px 14px;
+  background-color: #FF7900;
+  color:            #222222;
+  border-radius:    4px;
+  font-size:        13px;
+  font-weight:      bold;
+}
+
+input.btn-save,
+.btn-save {
+  width: 100%;
+  padding: 10px;
+  background-color: green;
+  color: #F5F5F5;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
 }
 
 .card{
