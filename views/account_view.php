@@ -9,23 +9,33 @@
     <?php require_once('components/header.php'); ?>
 
     <div class="card">
-        <h2>MY ACCOUNT</h2>
+        <div class="card-header">
+            <h2>MY ACCOUNT</h2>
+        </div>
         <?php if(!empty($userInfoError)): ?>
             <div class="message error"><?php echo htmlspecialchars($userInfoError)?></div>
         <?php else: ?>
-            <span>Username</span>
-            <span><?php echo htmlspecialchars($userName) ?></span>
-
-            <span>Name</span>
-            <span><?php echo htmlspecialchars( trim(($userInfo['name_first'] ?? '') . ' ' . ($userInfo['name_last'] ?? ''))); ?></span>
-
-            <span>Member Since</span>
-            <span><?php echo htmlspecialchars($userInfo['created'] ?? '-'); ?></span>
+            <div class="account-info-grid">
+                <div class="account-info-section">
+                    <span>Username: </span>
+                    <span><?php echo htmlspecialchars($userName) ?></span>
+                </div>
+                <div class="account-info-section">
+                    <span>Name: </span>
+                    <span><?php echo htmlspecialchars( trim(($userInfo['name_first'] ?? '') . ' ' . ($userInfo['name_last'] ?? ''))); ?></span>
+                </div>
+                <div class="account-info-section">
+                    <span>Member Since: </span>
+                    <span><?php echo htmlspecialchars($userInfo['created'] ?? '-'); ?></span>
+                </div>
+            </div>
         <?php endif; ?>
     </div>
 
     <div class="card">
-        <h2>Change Password</h2>
+        <div class="card-header">
+            <h2>Change Password</h2>
+        </div>
 
         <?php if( !empty($successMessage) ): ?>
             <div class="message success"><?php echo htmlspecialchars($successMessage); ?></div>
