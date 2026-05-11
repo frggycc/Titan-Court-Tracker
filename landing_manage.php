@@ -27,6 +27,49 @@
     $successMessage = '';
     $errorMessage   = '';
 
+    // Get players for edit/display
+    $playerRows = [];
+    $playerError = '';
+
+    $playerQuery = "SELECT
+                        ID,
+                        name_first,
+                        name_last,
+                        jersery_number,
+                        position,
+                        class
+                    FROM Player
+                    ORDER BY jersery_number ASC";
+    
+    $stmt = $db->prepare($playerQuery);
+    if ($stmt === FALSE){
+        $playerError = "Player query failed.";
+    }
+    else{
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result(
+            $pID,
+            $pFirst,
+            $pLast,
+            $pJersery,
+            $pPosition,
+            $pClass
+        );
+        while($stmt->fetch()){
+            $playerRows[] = [
+                'ID' => $pID,
+                'name_first' => $pFirst,
+                'name_last' => $pLast,
+                'jersey_number' => $pJersery,
+                'position' => $pPosition,
+                'class' => $pClass,
+            ];
+        }
+
+        $stmt->close();
+    }
+
     // Get League Team 
     $leagueRows  = [];
     $leagueError = '';
