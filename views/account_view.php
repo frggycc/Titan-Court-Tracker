@@ -28,6 +28,10 @@
                     <span>Member Since: </span>
                     <span><?php echo htmlspecialchars($userInfo['created'] ?? '-'); ?></span>
                 </div>
+                <div class="account-info-section">
+                    <span>Account Role: </span>
+                    <span><?php echo htmlspecialchars($userInfo['role_name'] ?? ''); ?></span>
+                </div>
             </div>
         <?php endif; ?>
     </div>
