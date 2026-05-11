@@ -108,7 +108,7 @@
                     <option value="Senior">Senior</option>
                 </select>
             </div>
-        <input type="submit" value="Add Player">
+        <input type="submit" value="Add Player" class="btn-save">
         </form>
     </div>
 
@@ -178,7 +178,7 @@
                 <label>State</label>
                 <input type="text" name="state" maxlength="100">
             </div>
-        <input type="submit" value="Add Team">
+        <input type="submit" value="Add Team" class="btn-save">
         </form>
     </div>
 </body>

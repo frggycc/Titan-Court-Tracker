@@ -30,6 +30,10 @@
     <div class="card">
         <div class="card-header">
             <h2>Season Averages</h2>
+            <!-- BUTTON FOR CRUD -->
+            <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
+                <a href="statistics_manage.php?season=<?php echo urlencode($selectedSeason);?>" class="manage-btn">  + Edit Data</a>
+            <?php endif; ?>
         </div>
         <table>
             <tr>
@@ -86,6 +90,10 @@
     <div class="card">
         <div class="card-header">
             <h2>Game Box Scores</h2>
+            <!-- BUTTON FOR CRUD -->
+            <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
+                <a href="statistics_manage.php?season=<?php echo urlencode($selectedSeason);?>" class="manage-btn">  + Edit Data</a>
+            <?php endif; ?>
         </div>
     
         <?php if( !empty($gameListError) ): ?>
@@ -158,7 +166,5 @@
             <?php endif; ?>
         <?php endif; ?>
     </div>
-
-    
 </body>
 </html>

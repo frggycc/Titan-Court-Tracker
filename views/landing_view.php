@@ -31,7 +31,7 @@
             <h2>Game Schedule</h2>
             <!-- BUTTON FOR CRUD -->
             <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
-                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>">  + Edit Data</a>
+                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>" class="manage-btn">  + Edit Data</a>
             <?php endif; ?>
         </div>
         <table>
@@ -76,7 +76,7 @@
             <h2>CSUF Roster</h2>
             <!-- BUTTON FOR CRUD -->
             <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
-                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>">  + Edit Data</a>
+                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>" class="manage-btn">  + Edit Data</a>
             <?php endif; ?>
         </div>
         <table>
@@ -103,7 +103,7 @@
             <h2>League Teams</h2>
             <!-- BUTTON FOR CRUD -->
             <?php if( $role === 'Users' || $role === 'Executive Manager'): ?>
-                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>">  + Edit Data</a>
+                <a href="landing_manage.php?season=<?php echo urlencode($selectedSeason);?>" class="manage-btn">  + Edit Data</a>
             <?php endif; ?>
         </div>
         <table>
