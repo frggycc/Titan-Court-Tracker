@@ -1,6 +1,9 @@
 <?php
     require_once('StartSession.php');
 
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
     if( !authenticatedUser() ){
         header('Location: login.php');
         exit;
@@ -27,6 +30,10 @@
     $successMessage = '';
     $errorMessage   = '';
 
+    /////////////////////////////////////
+    // CRUD FOR PLAYERS
+    /////////////////////////////////////
+
     // Get players for edit/display
     $playerRows = [];
     $playerError = '';
@@ -35,11 +42,11 @@
                         ID,
                         name_first,
                         name_last,
-                        jersery_number,
+                        jersey_number,
                         position,
                         class
                     FROM Player
-                    ORDER BY jersery_number ASC";
+                    ORDER BY jersey_number ASC";
     
     $stmt = $db->prepare($playerQuery);
     if ($stmt === FALSE){
@@ -70,6 +77,79 @@
         $stmt->close();
     }
 
+    // Add player
+    if( isset($_POST['action']) && $_POST['action'] === 'add_player' )
+    {
+        $firstName    = trim( preg_replace("/\t|\R/", ' ', $_POST['name_first']));
+        $lastName     = trim( preg_replace("/\t|\R/", ' ', $_POST['name_last']));
+        $jerseyNumber = (int)$_POST['jersey_number'];
+        $position     = trim( preg_replace("/\t|\R/", ' ', $_POST['position']));
+        $class        = trim($_POST['class']);
+
+        if( empty($lastName) || $jerseyNumber < 0 || $jerseyNumber > 99){
+            $errorMessage = "Last name is required; Jersey number must be between 0-99";
+        }
+        else{
+            $addPlayerQuery = "INSERT INTO Player 
+                               SET
+                                name_first     = ?,
+                                name_last      = ?,
+                                jersey_number  = ?,
+                                position       = ?,
+                                class          = ?";
+            $stmt = $db->prepare($addPlayerQuery);
+
+            if( $stmt === FALSE ){
+                $errorMessage = "Failed to add player.";
+            }
+            else{
+                $stmt->bind_param('ssiss', 
+                                    $firstName, 
+                                    $lastName, 
+                                    $jerseyNumber, 
+                                    $position, 
+                                    $class);
+                $stmt->execute();
+                if( $stmt->affected_rows === 1 ){
+                    $successMessage = 'Player added successfully.';
+                }
+                else{
+                    $errorMessage = "Failed to add player.";
+                }
+                $stmt->close();
+            }
+        }
+    }
+
+    // Delete player
+    if( isset($_POST['action']) && $_POST['action'] === 'delete_player' ){
+        $playerID = (int)$_POST['player_id'];
+        if( $playerID <= 0 ){
+            $errorMessage = "Invalid player selected.";
+        }
+        else{
+            $deletePlayerQuery = "DELETE FROM Player WHERE ID = ?";
+            $stmt = $db->prepare($deletePlayerQuery);
+            if( $stmt === FALSE ){
+                $errorMessage = "Failed to delete team.";
+            }
+            else{
+                $stmt->bind_param('i', $playerID);
+                $stmt->execute();
+                if( $stmt->affected_rows === 1 ) {
+                    $successMessage = "Player deleted successfully.";
+                }
+                else {
+                    $errorMessage = "Failed to delete player.";
+                }
+                $stmt->close();
+            }
+        }
+    }
+
+    /////////////////////////////////////
+    // CRUD FOR TEAMS
+    /////////////////////////////////////
     // Get League Team 
     $leagueRows  = [];
     $leagueError = '';

@@ -37,7 +37,83 @@
         </form>
     </div>
 
-    <!-- VIEW LEAGUE TEAMS -->
+    <!-- CRUD PLAYERS -->
+    <div class="card">
+        <div class="card-header">
+            <h2>CSUF Players</h2>
+        </div>
+ 
+        <!-- Player table -->
+        <?php if( !empty($playerError) ): ?>
+            <div class="message error"><?php echo htmlspecialchars($playerError); ?></div>
+        <?php elseif( empty($playerRows) ): ?>
+            <p class="no-data">No CSUF players found.</p>
+        <?php else: ?>
+            <table>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Class</th>
+                <th>Delete</th>
+            </tr>
+            <?php foreach( $playerRows as $row ): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['jersey_number']);  ?></td>
+                    <td><?php echo htmlspecialchars($row['name_first'] . ' ' . $row['name_last']); ?></td>
+                    <td><?php echo htmlspecialchars($row['position']); ?></td>
+                    <td><?php echo htmlspecialchars($row['class']); ?></td>
+        
+                    <!-- Delete -->
+                    <td>
+                    <form method="POST" action="landing_manage.php">
+                        <input type="hidden" name="action"  value="delete_player">
+                        <input type="hidden" name="player_id" value="<?php echo $row['ID']; ?>">
+                        <input type="hidden" name="season"  value="<?php echo htmlspecialchars($selectedSeason); ?>">
+                        <input type="submit" value="Delete" class="btn-delete">
+                    </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </table>
+        <?php endif; ?>
+ 
+        <!-- Add Player form -->
+        <h3>Add New Player</h3>
+        <form method="POST" action="landing_manage.php">
+        <input type="hidden" name="action" value="add_player">
+        <input type="hidden" name="season" value="<?php echo htmlspecialchars($selectedSeason); ?>">
+            <div>
+                <label>Player First Name</label>
+                <input type="text" name="name_first" maxlength="100">
+            </div>
+            <div>
+                <label>Player Last Name *</label>
+                <input type="text" name="name_last" maxlength="100" required>
+            </div>
+            <div>
+                <label>Jersey Number</label>
+                <input type="text" name="jersey_number" maxlength="100">
+            </div>
+            <div>
+                <label>Position</label>
+                <input type="text" name="position" maxlength="100">
+            </div>
+            <div>
+                <label>Class</label>
+                <select name="class">
+                    <option value="Freshman">Freshman</option>
+                    <option value="Sophomore">Sophomore</option>
+                    <option value="Junior">Junior</option>
+                    <option value="Senior">Senior</option>
+                </select>
+            </div>
+        </div>
+        <input type="submit" value="Add Player">
+        </form>
+    </div>
+
+    <!-- CRUD LEAGUE TEAMS -->
     <div class="card">
         <div class="card-header">
             <h2>League Teams</h2>
