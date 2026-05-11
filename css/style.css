@@ -46,7 +46,6 @@ nav a{
   padding-right: 10px;
 }
 
-
 /* LOGIN AND REGISTER BOXES */
 .auth-container{
   display: flex;
@@ -84,6 +83,7 @@ input[type="number"]
   background-color: #0F3F8C;
   color: #EBFBFF;
   font-size: 15px;
+  border: none;
 }
 
 input[type="submit"]{
@@ -94,6 +94,7 @@ input[type="submit"]{
   cursor: pointer;
   font-size: 15px;
   font-weight: bold;
+  border: none;
 }
 
 .redirect-link{
@@ -112,17 +113,20 @@ th{
   background-color: #0F3F8C;
   color: #FF7900;
   text-align: left;
+  padding: 8px 10px;
 }
 
 td{
-  color:#F5F5F5
+  color:#F5F5F5;
+  padding: 6px 8px;
 }
 
 input.btn-inline {
   width: auto;
-  padding: 5px;
+  padding: 5px 10px;
   background-color: #FF7900;
   color: #222222;
+  border: none;
   border-radius: 4px;
   font-size: 12px;
   font-weight: bold;
@@ -131,11 +135,16 @@ input.btn-inline {
   margin-top: 2px;
 }
 
+input.btn-delete, 
+btn-delete{
+  width: auto;
+}
+
 .card{
   background-color: #00244E;
-  padding: 40px;
-  margin-bottom: 25px;
-  border-radius: 30px;
+  padding: 30px 40px;
+  margin: 0px 20px 25px 20px;
+  border-radius: 15px;
 }
 
 .card-header{
@@ -152,16 +161,25 @@ input.btn-inline {
   padding-bottom: 0;
 }
 
+.section-title {
+  font-size: 20px;
+  color:#FF7900;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  padding-top: 20px;
+  border-top: 2px solid #0F3F8C;
+}
+
 /* DROPDOWN MENUS */
 .drop-down-menu{
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 0px 20px 20px 20px;
 }
 
 .drop-down-menu label {
   color: #EBFBFF;
-  font-size: 20px;
+  font-size: 26px;
   margin-right: 10px;
   margin-bottom: 0;
 }
@@ -179,8 +197,7 @@ input.btn-inline {
   width: 100%;
   padding: 10px;
   border-radius: 4px;
-  margin-bottom: 15px;
-  margin-top: 15px;
+  margin: 0 0 15px 0;
   font-size: 14px;
   text-align: center;
 }

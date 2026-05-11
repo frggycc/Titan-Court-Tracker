@@ -79,7 +79,7 @@
         <?php endif; ?>
  
         <!-- Add Player form -->
-        <h3>Add New Player</h3>
+        <h3 class="section-title">Add New Player</h3>
         <form method="POST" action="landing_manage.php">
         <input type="hidden" name="action" value="add_player">
         <input type="hidden" name="season" value="<?php echo htmlspecialchars($selectedSeason); ?>">
@@ -108,7 +108,6 @@
                     <option value="Senior">Senior</option>
                 </select>
             </div>
-        </div>
         <input type="submit" value="Add Player">
         </form>
     </div>
@@ -155,7 +154,7 @@
         <?php endif; ?>
  
         <!-- Add League Team form -->
-        <h3>Add New Team</h3>
+        <h3 class="section-title">Add New Team</h3>
         <form method="POST" action="landing_manage.php">
         <input type="hidden" name="action" value="add_league">
         <input type="hidden" name="season" value="<?php echo htmlspecialchars($selectedSeason); ?>">
@@ -179,7 +178,6 @@
                 <label>State</label>
                 <input type="text" name="state" maxlength="100">
             </div>
-        </div>
         <input type="submit" value="Add Team">
         </form>
     </div>
