@@ -23,6 +23,12 @@ if( !defined('MANAGER_VIEW_LOADED') )
 
         <?php if( !empty($successMessage) ): ?>
             <div class="message success"><?php echo htmlspecialchars($successMessage); ?></div>
+            <script>
+                // 3000 milliseconds = 3 seconds
+                setTimeout(function() {
+                    window.location.href = 'manager.php'; 
+                }, 2000);
+            </script>
         <?php endif; ?>
  
         <?php if( !empty($errorMessage) ): ?>
@@ -46,7 +52,7 @@ if( !defined('MANAGER_VIEW_LOADED') )
                     <td><?php echo htmlspecialchars($row['email'] ?? '-'); ?></td>
                     <td><?php echo htmlspecialchars($row['role_name']); ?></td>
 
-                    <!-- TODO: Change role name in table -->
+                    
                     <td>
                         <?php if($row['username'] !== $userName): ?>
                             <form method="POST" action="manager.php">
@@ -66,6 +72,19 @@ if( !defined('MANAGER_VIEW_LOADED') )
                             </form>
                         <?php else: ?>
                             <span>You</span>
+                        <?php endif; ?>
+                    </td>
+
+                    <!-- TODO: Delete user account -->
+                    <td>
+                        <?php if( $row['username'] !== $userName ): ?>
+                            <form method="POST" action="manager.php">
+                            <input type="hidden" name="action" value="delete_user">
+                            <input type="hidden" name="target_username" value="<?php echo htmlspecialchars($row['username']); ?>">
+                            <input type="submit" value="Delete" class="btn-delete">
+                            </form>
+                        <?php else: ?>
+                            <span class="no-data">—</span>
                         <?php endif; ?>
                     </td>
                 </tr>

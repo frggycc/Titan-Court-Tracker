@@ -127,6 +127,40 @@
         }
     }
 
+    // Delete a  user's account
+    if( isset($_POST['action']) && $_POST['action'] === 'delete_user' ){
+        $targetUser = trim( $_POST['target_username'] );
+    
+        // Prevent manager from deleting their own account
+        if( $targetUser === $userName ){
+            $errorMessage = "You cannot delete your own account.";
+        }
+        else if( empty($targetUser) ){
+            $errorMessage = "No user selected for deletion.";
+        }
+        else{
+            $targetUserQuery = "DELETE FROM UserLogin WHERE username = ?";
+            $stmt = $db->prepare($targetUserQuery);
+    
+            if( $stmt === FALSE ){
+                $errorMessage = "Account deletion failed.";
+            }
+            else{
+                $stmt->bind_param('s', $targetUser);
+                $stmt->execute();
+        
+                if( $stmt->affected_rows === 1 ){
+                    $successMessage = "Account has been deleted.";
+                }
+                else{
+                    $errorMessage = "Deletion failed.";
+                }
+                $stmt->close();
+            }
+        }
+    }
+
+
     define('MANAGER_VIEW_LOADED', true);
     require_once('views/manager_view.php');
  
